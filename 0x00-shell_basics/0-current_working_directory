@@ -1,5 +1,2 @@
 #!/bin/bash
-0-current_working_directory=$(pwd)
-echo"$./0_current_working_directory/root/alx_system_engineering_deveps/0x00_shell_basics"
-
-
+pwd
