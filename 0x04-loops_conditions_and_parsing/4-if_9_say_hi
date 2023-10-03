@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# This script displays "Best School" 10 times using the while loop.
+# For the 9th iteration, it displays "Best School" and then "Hi" on a new line using the if statement.
+
+counter=0
+while [[ $counter -lt 10 ]]; do
+    ((counter++))
+    if [[ $counter -eq 9 ]]; then
+        echo "Best School"
+        echo "Hi"
+    else
+        echo "Best School"
+    fi
+done
