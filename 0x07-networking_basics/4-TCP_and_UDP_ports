@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Display listening sockets with PID and program name
+netstat -tlnp | awk '$NF == "LISTEN" {printf "%s\t%s\n", $7, $NF}'
