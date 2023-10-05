@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Get all IP addresses
+# Split the IP addresses by space
+# Print each IP address line by line
+
+ip_addresses=$(hostname -I)
+
+IFS=' ' read -r -a ip_array <<< "$ip_addresses"
+
+echo "List of IP Addresses"
+for ip in "${ip_array[@]}"
+do
+    echo "$ip"
+done
