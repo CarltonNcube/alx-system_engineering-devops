@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# SSH Configuration for 234875-web-01
+# Description: Connect to the server 234875-web-01 using the private key
+
+Host 234875-web-01
+    HostName 54.173.251.99
+    User ubuntu
+    IdentityFile ~/.ssh/school
+    PreferredAuthentications publickey
+    PasswordAuthentication no
+    PubkeyAuthentication yes
