@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# nginx_redirect_me.erb
+server {
+    listen 80;
+    server_name krismaholdings.tech;
+
+    location /redirect_me {
+        error_page 404 /custom_404_redirect_me.html;
+        internal;
+    }
+
+    location = /custom_404_redirect_me.html {
+        root /usr/share/nginx/html;
+        internal;
+        echo "404 Not Found - This is a custom error message for /redirect_me";
+    }
+}

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# nginx_default.erb
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index index.html index.htm;
+
+    server_name krismaholdings.tech;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
