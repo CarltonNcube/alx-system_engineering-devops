@@ -1,23 +1,30 @@
 #!/usr/bin/env bash
+# Update Ubuntu server
 
-# Install Nginx package
+exec { 'update server':
+  command  => 'apt-get update',
+  user     => 'root',
+  provider => 'shell',
+}
+
+# Install Nginx web server on the server
 package { 'nginx':
-  ensure => installed,
+  ensure   => present,
+  provider => 'apt',
 }
 
-# Get the server hostname
-$hostname = $facts['hostname']
-
-# Create an Nginx configuration file with the custom header
-file { '/etc/nginx/conf.d/custom_header.conf':
-  ensure  => present,
-  content => "add_header X-Served-By ${hostname};",
-  require => Package['nginx'],
+# Custom Nginx response header (X-Served-By: hostname)
+file_line { 'add HTTP header':
+  ensure => 'present',
+  path   => '/etc/nginx/sites-available/default',
+  after  => 'listen 80 default_server;',
+  line   => '    add_header X-Served-By $hostname;',
+  notify => Service['nginx'],
 }
 
-# Restart Nginx service to apply changes
+# Start service
 service { 'nginx':
-  ensure    => running,
-  enable    => true,
-  subscribe => File['/etc/nginx/conf.d/custom_header.conf'],
+  ensure  => 'running',
+  enable  => true,
+  require => Package['nginx'],
 }
