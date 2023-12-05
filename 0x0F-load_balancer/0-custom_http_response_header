@@ -7,9 +7,21 @@ apt-get -y install nginx
 # Add custom response header
 HOST_NAME=$(hostname)
 HEADER="\\\n\tadd_header X-Served-By $HOST_NAME;\n"
-FIND=$(grep "X-Served-By" /etc/nginx/sites-available/default)
-if [ -z "$FIND" ]; then
-    sed -i "23i $HEADER" /etc/nginx/sites-available/default
+
+# Find the appropriate location to add the header (usually within a server block)
+CONFIG_FILE="/etc/nginx/sites-available/default"
+if [ -f "$CONFIG_FILE" ]; then
+    # Check if the header already exists
+    FIND=$(grep "X-Served-By" "$CONFIG_FILE")
+    if [ -z "$FIND" ]; then
+        # Find a server block and add the header inside it
+        sed -i '/server {/a\'"$HEADER" "$CONFIG_FILE"
+        echo "Custom header added to $CONFIG_FILE"
+    else
+        echo "Custom header already exists in $CONFIG_FILE"
+    fi
+else
+    echo "Nginx configuration file not found: $CONFIG_FILE"
 fi
 
 # Restart nginx service
