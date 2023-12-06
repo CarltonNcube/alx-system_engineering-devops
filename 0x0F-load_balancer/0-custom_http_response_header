@@ -11,11 +11,11 @@ HEADER="\\\n\tadd_header X-Served-By $HOST_NAME;\n"
 # Find the appropriate location to add the header (usually within a server block)
 CONFIG_FILE="/etc/nginx/sites-available/default"
 if [ -f "$CONFIG_FILE" ]; then
-    # Check if the header already exists
-    FIND=$(grep "X-Served-By" "$CONFIG_FILE")
+    # Check if the header already exists (case-insensitive)
+    FIND=$(grep -i "X-Served-By" "$CONFIG_FILE")
     if [ -z "$FIND" ]; then
         # Find a server block and add the header inside it
-        sed -i '/server {/a\'"$HEADER" "$CONFIG_FILE"
+        sed -i "/server {/a $HEADER" "$CONFIG_FILE"
         echo "Custom header added to $CONFIG_FILE"
     else
         echo "Custom header already exists in $CONFIG_FILE"
