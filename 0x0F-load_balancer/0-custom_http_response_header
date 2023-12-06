@@ -15,7 +15,7 @@ if [ -f "$CONFIG_FILE" ]; then
     FIND=$(grep "X-Served-By" "$CONFIG_FILE")
     if [ -z "$FIND" ]; then
         # Find a server block and add the header inside it
-        sed -i '/server {/a\'"$HEADER" "$CONFIG_FILE"
+        sed -i "/server {/a $HEADER" "$CONFIG_FILE"
         echo "Custom header added to $CONFIG_FILE"
     else
         echo "Custom header already exists in $CONFIG_FILE"
