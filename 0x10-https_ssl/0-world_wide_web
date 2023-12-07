@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Check if correct number of arguments is provided
+
 if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
     echo "Usage: $0 <domain> [subdomain]"
     exit 1
@@ -20,7 +21,12 @@ fi
 # Iterate through subdomains and display information
 for sub in "${subdomains[@]}"; do
     result=$(dig +short "$sub.$domain")
-    record_type=$(dig +short "$sub.$domain" | awk 'NR==1{print length > 0 ? "A" : "CNAME"}')
-
-    echo "The subdomain $sub is a $record_type record and points to $result"
+    
+    if [ -z "$result" ]; then
+        echo "No DNS record found for $sub.$domain"
+    else
+        # Use awk to determine the record type (A or CNAME)
+        record_type=$(dig +short "$sub.$domain" | awk 'NR==1{print length > 0 ? "A" : "CNAME"}')
+        echo "The subdomain $sub is a $record_type record and points to $result"
+    fi
 done
