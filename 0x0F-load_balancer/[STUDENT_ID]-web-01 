@@ -1,0 +1,17 @@
+server {
+    listen 80;  # Listen on port 80 for HTTP traffic
+    server_name krismaholdings.tech;  # Set the server name to krismaholdings.tech
+
+    root /var/www/krismaholdings.tech;  # Set the root directory for the website
+    index index.html;  # Specify the default index file
+
+    location / {
+        add_header X-Served-By $hostname;  # Add a custom header with the server hostname
+    }
+
+    error_page 404 /404.html;  # Specify the custom error page for 404 errors
+    location = /404.html {
+        root /usr/share/nginx/html;
+        internal;  # Mark this location as internal to prevent direct access
+    }
+}

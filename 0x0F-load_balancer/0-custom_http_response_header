@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
-# Update and install nginx
 
-apt-get -y update
-apt-get -y install nginx
+# Update package information
+sudo apt-get update
 
-# Add custom response header
-HOST_NAME=$(hostname)
-HEADER="\\\n\tadd_header X-Served-By $HOST_NAME;\n"
+# Install Nginx
+sudo apt-get install -y nginx
 
-# Find the appropriate location to add the header (usually within a server block)
+# Get the hostname
+HOSTNAME=$(hostname)
+
+# Add custom response header to Nginx default configuration
+HEADER="\\\n\tadd_header X-Served-By $HOSTNAME;\n"
 CONFIG_FILE="/etc/nginx/sites-available/default"
+<<<<<<< HEAD
 if [ -f "$CONFIG_FILE" ]; then
     # Check if the header already exists (case-insensitive)
     FIND=$(grep -i "X-Served-By" "$CONFIG_FILE")
@@ -20,9 +23,20 @@ if [ -f "$CONFIG_FILE" ]; then
     else
         echo "Custom header already exists in $CONFIG_FILE"
     fi
+=======
+
+# Check if the header already exists
+if ! grep -q "X-Served-By" "$CONFIG_FILE"; then
+    # Add the header inside the server block
+    sudo sed -i "/server {/a $HEADER" "$CONFIG_FILE"
+    echo "Custom header added to $CONFIG_FILE"
+>>>>>>> 28554a71d5ca629ae655dc740804c86c28d99da9
 else
-    echo "Nginx configuration file not found: $CONFIG_FILE"
+    echo "Custom header already exists in $CONFIG_FILE"
 fi
 
-# Restart nginx service
-service nginx restart
+# Create a simple index.html page
+echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
+
+# Restart Nginx
+sudo systemctl restart nginx
