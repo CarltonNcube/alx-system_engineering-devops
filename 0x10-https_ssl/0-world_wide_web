@@ -27,6 +27,6 @@ for sub in "${subdomains[@]}"; do
     else
         # Use awk to determine the record type (A or CNAME)
         record_type=$(dig +short "$sub.$domain" | awk 'NR==1{print length > 0 ? "A" : "CNAME"}')
-        echo "The subdomain $sub is A $record_type record and points to $result"
+        echo "The subdomain $sub is a A $record_type record and points to $result"
     fi
 done
