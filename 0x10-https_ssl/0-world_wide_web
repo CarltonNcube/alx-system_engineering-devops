@@ -26,7 +26,7 @@ for sub in "${subdomains[@]}"; do
         echo "No DNS record found for $sub.$domain"
     else
         # Use awk to determine the record type (A or CNAME)
-        record_type=$(dig +short "$sub.$domain" | awk 'NR==1{print length > 0 ? "A" : "CNAME"}')
+        record_type=$(dig +short -t "$sub.$domain" | awk '{print length > 0 ? "A" : "CNAME"}')
         echo "The subdomain $sub is a A $record_type record and points to $result"
     fi
 done
