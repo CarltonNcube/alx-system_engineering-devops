@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
-# This script configures nginx to listen on port 80
-sed -i 's/listen 80 default_server/listen 0.0.0.0:80 default_server/g' /etc/nginx/sites-available/default
+# Script to configure Nginx to listen on port 80 and resolve any issues
+# Debugging and fixing the issue with Nginx listening on port 80
+sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 service nginx restart
 
+# Check if Nginx is now listening on port 80
+nginx_status=$(curl -I -s http://localhost | head -n 1)
+if [[ $nginx_status == *"200 OK"* ]]; then
+  echo "Nginx is now running and listening on port 80."
+else
+  echo "There was an issue configuring Nginx to listen on port 80."
+fi
