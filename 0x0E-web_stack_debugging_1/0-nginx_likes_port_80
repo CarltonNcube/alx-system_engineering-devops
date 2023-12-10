@@ -2,3 +2,4 @@
 # Script to configure Nginx to listen on port 80 and resolve any issues
 sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 service nginx restart
+
