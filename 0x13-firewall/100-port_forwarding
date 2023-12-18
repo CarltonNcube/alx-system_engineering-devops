@@ -1,6 +1,5 @@
 # UFW configuration file for Task 1
-*filter
-:ufw-user-forward - [0:0]
+*nat
+: PREROUTING ACCEPT [0:0]
 -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
--A ufw-user-forward -p tcp --dport 8080 -j ACCEPT
 COMMIT
