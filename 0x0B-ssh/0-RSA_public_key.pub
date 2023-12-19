@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Specify the path to your keys folder
+keys_folder="/alx-system_engineering-devops/0x04-loops_conditions_and_parsing"
+
+# Copy the private and public keys to the ~/.ssh directory
+cp "$keys_folder/0-RSA_private_key" ~/.ssh/id_rsa
+cp "$keys_folder/0-RSA_public_key.pub" ~/.ssh/id_rsa.pub
+
+# Create an authorized_keys file using the public key
+cp "$keys_folder/0-RSA_public_key.pub" ~/.ssh/authorized_key
