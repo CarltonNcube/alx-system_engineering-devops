@@ -1,9 +1,36 @@
 #!/usr/bin/env bash
-# This script configures Nginx to run as the nginx user and listen on port 8080.
 
-chmod ugo+wrx /etc/apache2/ports.conf /etc/nginx/nginx.conf
-sed -i -e 's/Listen 8080/#Listen 8080/g' \
-       -e 's/#user www-data;/user nginx;/g' /etc/nginx/nginx.conf
-sed -i 's/80/8080/g' /etc/nginx/sites-available/default
-pkill -1 apache2
-sudo -u nginx service nginx restart
+# Ensure nginx is installed
+apt-get update
+apt-get install -y nginx
+
+# Create nginx user if it doesn't exist
+if ! id -u nginx &>/dev/null; then
+    adduser --system --no-create-home --disabled-login --disabled-password --group nginx
+fi
+
+# Change nginx configuration
+sed -i -e 's/80/8080/g' /etc/nginx/sites-available/default
+sed -i -e 's/#user www-data;/user nginx;/g' /etc/nginx/nginx.conf
+
+# Allow nginx user to read necessary files
+chmod 644 /etc/nginx/nginx.conf
+chmod 644 /etc/nginx/sites-available/default
+
+# Restart nginx service
+service nginx restart
+
+# Verify nginx is running as nginx user and listening on port 8080
+if ps aux | grep -q '[n]ginx: master process'; then
+    echo "Nginx is running as the nginx user."
+else
+    echo "Nginx is not running correctly."
+fi
+
+# Check if nginx is listening on port 8080
+nc -z 0 8080
+if [ $? -eq 0 ]; then
+    echo "Nginx is listening on port 8080."
+else
+    echo "Nginx is not listening on port 8080."
+fi
