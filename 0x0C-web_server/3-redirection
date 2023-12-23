@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Script to install Nginx web server and configure redirection
 
 # Install Nginx web server
 apt-get update
@@ -24,4 +25,5 @@ ln -s /etc/nginx/sites-available/3-redirection /etc/nginx/sites-enabled/
 nginx -t
 
 # Restart Nginx to apply changes
-systemctl restart nginx
+service nginx restart
+
