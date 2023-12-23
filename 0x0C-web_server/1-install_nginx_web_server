@@ -2,21 +2,25 @@
 # Bash script to configure Nginx to return Hello World! at the root
 
 # Create a simple HTML file with Hello World!
-echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
+echo "Hello World!" | sudo tee /etc/nginx/html/index.html > /dev/null
 
 # Configure Nginx to serve the HTML file
-echo "server {
-    listen 80;
-    server_name localhost;
+sudo tee /etc/nginx/sites-available/default > /dev/null <<EOL
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /etc/nginx/html;
+    index index.html index.htm index.nginx-debian.html;
+    server_name _;
+}
+EOL
 
-    location / {
-        root /var/www/html;
-        index index.html;
-    }
-}" | sudo tee /etc/nginx/sites-available/default > /dev/null
+# Create a symbolic link to enable the new site
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
-# Restart Nginx without using systemctl
-sudo service nginx restart > /dev/null 2>&1
+# Restart Nginx
+sudo service nginx restart
 
 # Test the configuration with curl
 curl localhost
+
