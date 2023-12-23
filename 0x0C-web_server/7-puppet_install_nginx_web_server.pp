@@ -9,9 +9,9 @@ file { '/etc/nginx/sites-available/default':
   content => "
 server {
     listen 80 default_server;
-    
+
     location /redirect_me {
-        rewrite ^ https://www.youtube.com/@nkulumoncube5051;
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
     }
 
     location / {
