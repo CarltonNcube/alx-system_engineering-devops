@@ -8,13 +8,13 @@ apt-get -y install haproxy
 # Configure HAProxy to distribute traffic using a round-robin algorithm
 cat <<EOF > /etc/haproxy/haproxy.cfg
 frontend krismaholdings.tech
-    bind 0:8080
+    bind 0:80
     default_backend web_servers
 
 backend web_servers
     balance roundrobin
-    server 234875-web-01 54.173.251.99:8080 check
-    server 234875-web-02 52.91.125.177:8080 check
+    server 234875-web-01 54.173.251.99:80 check
+    server 234875-web-02 52.91.125.177:80 check
 EOF
 
 # Restart HAProxy service
