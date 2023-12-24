@@ -8,10 +8,8 @@ echo "Hello World!" | sudo tee /etc/nginx/html/index.html > /dev/null
 sudo tee /etc/nginx/sites-available/default > /dev/null <<EOL
 server {
     listen 80 default_server;
-    listen [::]:80 default_server;
     root /etc/nginx/html;
-    index index.html index.htm index.nginx-debian.html;
-    server_name _;
+    index index.html;
 }
 EOL
 
@@ -23,4 +21,3 @@ sudo service nginx restart
 
 # Test the configuration with curl
 curl localhost
-
