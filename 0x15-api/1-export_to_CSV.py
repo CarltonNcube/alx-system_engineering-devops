@@ -6,9 +6,10 @@ Usage:
     python3 1-export_to_CSV.py <employee_id>
 """
 
+import csv
 import requests
 import sys
-import csv
+
 
 def export_to_csv(employee_id):
     # Fetch user information
@@ -30,6 +31,7 @@ def export_to_csv(employee_id):
         for task in todos
     ]
 
+    
     # Write to CSV
     csv_filename = f"{employee_id}.csv"
     with open(csv_filename, 'w', newline='') as csvfile:
@@ -38,6 +40,7 @@ def export_to_csv(employee_id):
             "TASK_TITLE"])
         csv_writer.writerows(csv_data)
 
+    
     print(f"Number of tasks in CSV: {len(csv_data)}")
     print(f"Data exported to {csv_filename}")
 
