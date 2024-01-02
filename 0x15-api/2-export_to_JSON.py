@@ -13,8 +13,7 @@ import sys
 
 def export_to_json(employee_id):
     """
-    Retrieve and export TODO list progress for a given employee 
-    ID in JSON format.
+    Retrieve and export TODO list for a given employee ID in JSON format.
 
     Args:
         employee_id (int): The ID of the employee.
@@ -23,7 +22,9 @@ def export_to_json(employee_id):
         None
     """
     api_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
-    todos_url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
+    todos_url = (
+    "https://jsonplaceholder.typicode.com/todos?"
+    f"userId={employee_id}")
 
     response_employee = requests.get(api_url)
     response_todos = requests.get(todos_url)
@@ -59,4 +60,3 @@ if __name__ == "__main__":
 
     employee_id = int(sys.argv[1])
     export_to_json(employee_id)
-
