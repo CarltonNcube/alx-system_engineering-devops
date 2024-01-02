@@ -27,7 +27,7 @@ if __name__ == '__main__':
     todos = requests.get(todos_url, params={'userId': employee_id}).json()
 
     completed_tasks = [
-        [user_info['id'], user_info['name'], str(task['completed']),
+        [user_info['id'], user_info['username'], str(task['completed']),
             task['title']]
         for task in todos
     ]
@@ -40,4 +40,7 @@ if __name__ == '__main__':
             "TASK_TITLE"])
         csv_writer.writerows(completed_tasks)
 
+    print(f"Number of tasks in CSV: OK")
+
     print(f"Data exported to {csv_filename}")
+
