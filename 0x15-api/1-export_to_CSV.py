@@ -4,7 +4,6 @@ import csv
 import requests as r
 import sys
 
-
 def export_to_csv(user_id):
     url = "https://jsonplaceholder.typicode.com/"
     user_info = r.get(url + "users/{}".format(user_id)).json()
