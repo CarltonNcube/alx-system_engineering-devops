@@ -23,14 +23,17 @@ def export_to_json(employee_id):
     """
     api_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
     todos_url = (
-    "https://jsonplaceholder.typicode.com/todos?"
-    f"userId={employee_id}")
+        "https://jsonplaceholder.typicode.com/todos?"
+        f"userId={employee_id}"
+    )
 
     response_employee = requests.get(api_url)
     response_todos = requests.get(todos_url)
 
-    if (response_employee.status_code != 200 or
-            response_todos.status_code != 200):
+    if (
+        response_employee.status_code != 200 or
+        response_todos.status_code != 200
+    ):
         print("Error: Unable to fetch data from the API.")
         sys.exit(1)
 
@@ -60,3 +63,4 @@ if __name__ == "__main__":
 
     employee_id = int(sys.argv[1])
     export_to_json(employee_id)
+
