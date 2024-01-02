@@ -1,43 +1,37 @@
 #!/usr/bin/python3
-"""
-Export to CSV
-
-Usage:
-    python3 1-export_to_CSV.py <employee_id>
-"""
-
 import requests
 import csv
 import sys
 
 def export_to_csv(employee_id):
-    api_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
+    user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
     todos_url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
 
-    response_employee = requests.get(api_url)
-    response_todos = requests.get(todos_url)
+    # Fetch user information
+    user_info = requests.get(user_url).json()
+    username = user_info.get("username")
 
-    if response_employee.status_code != 200 or response_todos.status_code != 200:
-        print("Error: Unable to fetch data from the API.")
-        sys.exit(1)
+    # Fetch user's todos
+    todos = requests.get(todos_url).json()
 
-    employee_info, todos = response_employee.json(), response_todos.json()
-
+    # Prepare and write to CSV
     filename = f"{employee_id}.csv"
-    with open(filename, mode='w', newline='') as file:
-        writer = csv.writer(file, quoting=csv.QUOTE_ALL)
-        writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS",
+    with open(filename, "w", newline="") as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS",
             "TASK_TITLE"])
 
-        [writer.writerow([employee_id, employee_info['username'], 
-            str(task['completed']), task['title']]) for task in todos]
+        for task in todos:
+            csv_writer.writerow([employee_id, username, 
+                str(task["completed"]), task["title"]])
 
     print(f"Data exported to {filename}")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2 or not sys.argv[1].isdigit():
-        print("Usage: python3 1-export_to_CSV.py <employee_id>")
+        print("Usage: python3 script.py <employee_id>")
         sys.exit(1)
 
-    export_to_csv(int(sys.argv[1]))
+    employee_id = int(sys.argv[1])
+    export_to_csv(employee_id)
 
