@@ -6,8 +6,8 @@ Usage:
     python3 2-export_to_JSON.py <employee_id>
 """
 
-import requests
 import json
+import requests
 import sys
 
 
