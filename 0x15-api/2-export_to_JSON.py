@@ -28,10 +28,8 @@ def export_to_json(employee_id):
     response_employee = requests.get(api_url)
     response_todos = requests.get(todos_url)
 
-    if (
-        response_employee.status_code != 200
-        or response_todos.status_code != 200
-    ):
+    if (response_employee.status_code != 200 or 
+        response_todos.status_code != 200):
         print("Error: Unable to fetch data from the API.")
         sys.exit(1)
 
@@ -41,16 +39,14 @@ def export_to_json(employee_id):
     data = {str(employee_id): []}
 
     for task in todos:
-        data[str(employee_id)].append(
-            {
-                "task": task["title"],
-                "completed": task["completed"],
-                "username": employee_info["username"],
-            }
-        )
+        data[str(employee_id)].append({
+            "task": task['title'],
+            "completed": task['completed'],
+            "username": employee_info['username']
+        })
 
     filename = f"{employee_id}.json"
-    with open(filename, "w") as file:
+    with open(filename, 'w') as file:
         json.dump(data, file)
 
     print(f"Data exported to {filename}")
