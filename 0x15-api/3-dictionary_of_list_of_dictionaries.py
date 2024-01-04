@@ -34,4 +34,3 @@ if __name__ == "__main__":
     users = requests.get(f"{url}users").json()
 
     export_to_json(users)
-
