@@ -6,18 +6,21 @@ for a specified subreddit. If the subreddit is invalid, returns 0.
 
 import requests
 
-
 def number_of_subscribers(subreddit):
     """
     Function that queries the Reddit API
     - If not a valid subreddit, return 0.
     """
-    req = requests.get(
-        "https://www.reddit.com/r/{}/about.json".format(subreddit),
-        headers={"User-Agent": "Custom"},
-    )
+    url = f"https://www.reddit.com/r/{subreddit}/about.json"
+    headers = {"User-Agent": "Custom"}
+    reddit_username = 'Code_Break4560'
+    reddit_password = '#Gombedza101'
 
-    if req.status_code == 200:
-        return req.json().get("data").get("subscribers")
+    response = requests.get(url, headers=headers,
+            auth=(reddit_username, reddit_password))
+
+    if response.status_code == 200:
+        return response.json().get("data", {}).get("subscribers", 0)
     else:
+        print(f"Unexpected status code: {response.status_code}")
         return 0
