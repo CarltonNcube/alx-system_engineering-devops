@@ -16,11 +16,16 @@ def number_of_subscribers(subreddit):
     reddit_username = 'Code_Break4560'
     reddit_password = '#Gombedza101'
 
-    response = requests.get(url, headers=headers,
-            auth=(reddit_username, reddit_password))
+    response = requests.get(
+        url,
+        headers=headers,
+        auth=(reddit_username, reddit_password)
+    )
 
     if response.status_code == 200:
         return response.json().get("data", {}).get("subscribers", 0)
-    else:
-        print(f"Unexpected status code: {response.status_code}")
-        return 0
+
+    print(f"Unexpected status code: {response.status_code}")
+    return 0
+
+if __name__ == "__main__":
