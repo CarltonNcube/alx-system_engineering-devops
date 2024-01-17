@@ -27,5 +27,3 @@ def number_of_subscribers(subreddit):
 
     print(f"Unexpected status code: {response.status_code}")
     return 0
-
-if __name__ == "__main__":
