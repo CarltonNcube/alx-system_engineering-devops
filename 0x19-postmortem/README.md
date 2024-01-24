@@ -52,6 +52,7 @@ Resolution:
 - 4:15 PM (UTC): Implemented additional security measures, including firewall rules and enhanced intrusion detection.
 
 Root Cause and Resolution:
+https://github.com/CarltonNcube/alx-system_engineering-devops/blob/544ec8886b01bde5fe7b43e8a2525422bba641a6/0x19-postmortem/Postmortem.png
 
 Root Cause:
 
