@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-# This script sends a HUP signal to all processes with the name "gunicorn"
+# Sends a HUP signal to all processes with the name "gunicorn"
 grep gunicorn  | xargs kill -HUP
