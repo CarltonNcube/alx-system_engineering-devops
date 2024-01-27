@@ -9,8 +9,8 @@ server {
     index index.html index.htm index.nginx-debian.html;
 
     # configure /2-hbnb route of AirBnB_clone_v4 as root location
-    location / {
-        proxy_pass http://127.0.0.1:5003/2-hbnb;
+    location /2-hbnb {
+        proxy_pass http://127.0.0.1:5003/;
     }
 
     # serve static content for Airbnb_clone_v4
@@ -48,4 +48,4 @@ server {
     client_header_timeout 12;
     keepalive_timeout 15;
     send_timeout 10;
-}}
+}
