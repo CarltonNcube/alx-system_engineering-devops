@@ -1,7 +1,7 @@
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
-    server_name YOUR_PUBLIC_IP;
+    server_name 54.173.251.99
 
     add_header X-Served-By 234875-web-01;
 
