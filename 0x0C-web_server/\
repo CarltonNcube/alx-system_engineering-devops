@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Install Nginx web server
+apt-get update
+apt-get install -y nginx
+
+# Create Nginx configuration file for redirection
+cat <<EOL > /etc/nginx/sites-available/3-redirection
+server {
+    listen 80;
+    listen [::]:80 default_server;
+    root   /etc/nginx/html;
+    index  index.html;
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+}
+EOL
+
+# Create a symbolic link to enable the new site
+ln -s /etc/nginx/sites-available/3-redirection /etc/nginx/sites-enabled/
+
+# Test Nginx configuration
+nginx -t
+
+# Restart Nginx to apply changes
+systemctl restart nginx

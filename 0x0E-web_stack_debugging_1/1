@@ -1,0 +1,4 @@
+sed: no input files
+./0-nginx_likes_port_80: line 4: /etc/nginx/sites-enabled/default: Permission denied
+ * Restarting nginx nginx
+   ...fail!
