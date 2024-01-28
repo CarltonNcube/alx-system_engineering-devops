@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Sends a HUP signal to all processes with the name "gunicorn"
 
-grep gunicorn  | xargs kill -HUP
+pgrep gunicorn  | xargs kill -HUP
