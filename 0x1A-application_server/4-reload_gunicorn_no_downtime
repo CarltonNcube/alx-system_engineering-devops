@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Restarts Gunicorn gracefully by sending a HUP signal to all Gunicorn processes
 
-ps aux | grep gunicorn | awk '{ print $2 }' | xargs kill -HUP
+pkill -WINCH gunicorn
