@@ -1,14 +1,4 @@
 #!/usr/bin/env bash
-
-# Find the PID of the Gunicorn master process
-MASTER_PID=$(pgrep gunicorn)
-
-# Send HUP signal to the Gunicorn master process to gracefully reload workers
-kill -HUP "$MASTER_PID"
-
-# Check if the reload was successful
-sleep 2 # Wait for 2 seconds for new workers to start
-NEW_WORKERS=$(pgrep -P "$MASTER_PID")
-
-# Print success message if new workers are found, otherwise print failure message
-[ -n "$NEW_WORKERS" ] && echo "OK"
+# Gracefully reloads Gunicorn.
+PID=$(pgrep gunicorn | head -n 1)
+kill -HUP "$PID"
