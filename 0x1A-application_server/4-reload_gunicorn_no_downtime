@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-# Sends a HUP signal to all processes with the name "gunicorn"
+# Restarts Gunicorn gracefully by sending a HUP signal to all Gunicorn processes
 
-pgrep gunicorn  | xargs kill -HUP
+pgrep gunicorn | xargs kill -HUP
