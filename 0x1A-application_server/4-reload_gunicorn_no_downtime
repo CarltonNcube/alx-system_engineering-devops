@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-# Restarts Gunicorn gracefully by sending a HUP signal to all Gunicorn processes
-
+# Gracefully reload gunicorn
 pkill -WINCH gunicorn
