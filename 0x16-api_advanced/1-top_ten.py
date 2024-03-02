@@ -1,29 +1,23 @@
 #!/usr/bin/python3
+"""
+This module contains a function that queries
+the Reddit API and returns the number of subscribers.
+"""
 
-import requests
+from requests import get
+
 
 def top_ten(subreddit):
     """
     Function that queries the Reddit API
-    and prints the titles of the first 10 hot posts
-    for a given subreddit.
+    and returns the number of subscribers.
     """
     url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
-    headers = {"User-Agent": "Custom"}
-
-    response = requests.get(url, headers=headers, allow_redirects=False)
-
-    # Check if the response status code is 200 (OK)
-    if response.status_code == 200:
-        # Extract the list of posts from the JSON response
-        data = response.json().get("data", {}).get("children", [])
-
-        # Print the titles of the first 10 posts
-        for post in data:
-            print(post.get("data", {}).get("title"))
-    else:
-        # Print None if the subreddit is not valid or there is an error
-        print(None)
-
-if __name__ == "__main__":
-    top_ten(sys.argv[1])
+    header = {
+        "User-Agent": "Mozilla/5.0"
+        }
+    res = get(url=url, headers=header, allow_redirects=False)
+    if res.status_code == 200:
+        for post in res.json().get('data', {}).get('children', []):
+            print(post['data']['title'])
+    print(None)
