@@ -1,23 +1,20 @@
 #!/usr/bin/python3
-"""
-1-top_ten
-"""
-import requests
+# get subs
+from requests import get
+from sys import argv
+
 
 def top_ten(subreddit):
-    """
-    Function that queries the Reddit API
-    and prints the titles of the first 10 hot posts
-    for a given subreddit.
-    """
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
-    headers = {"User-Agent": "Custom"}
-    
-    response = requests.get(url, headers=headers)
+    """subs"""
+    head = {'User-Agent': 'Dan Kazam'}
+    try:
+        count = get('https://www.reddit.com/r/{}/hot.json?count=10'.format(
+            subreddit), headers=head).json().get('data').get('children')
+        print('\n'.join([dic.get('data').get('title')
+                         for dic in count][:10]))
+    except:
+        print('None')
 
-    if response.status_code == 200:
-        data = response.json().get("data", {}).get("children", [])
-        for post in data:
-            print(post.get("data", {}).get("title"))
-    else:
-        print(None)
+
+if __name__ == "__main__":
+    top_ten(argv[1])
